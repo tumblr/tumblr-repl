@@ -1,0 +1,34 @@
+{
+  "name": "tumblr-repl",
+  "version": "1.0.0",
+  "description": "REPL for the Tumblr API, built on tumblr.js",
+  "main": "index.js",
+  "bin": {
+    "tumblr": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/tumblr/tumblr-repl.git"
+  },
+  "keywords": [
+    "tumblr",
+    "tumblr.js",
+    "repl",
+    "api"
+  ],
+  "author": "Keith McKnight",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "json5": "^0.5.0",
+    "lodash": "^4.11.1",
+    "minimist": "^1.2.0",
+    "os-homedir": "^1.0.1",
+    "query-string": "^4.1.0",
+    "repl.history": "^0.1.3",
+    "tumblr.js": "latest"
+  }
+}
