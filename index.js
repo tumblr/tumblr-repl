@@ -46,6 +46,15 @@ var credentials = (function() {
         missingCredentials.forEach(function(key) {
             console.warn(chalk.yellow('  * %s'), key);
         });
+
+        if (credentials.consumer_key && credentials.consumer_secret) {
+            console.log('\nYou can generate user tokens by going to the API console:\n');
+            console.log(chalk.magenta([
+                'https://api.tumblr.com/console/auth',
+                '?consumer_key=', credentials.consumer_key,
+                '&consumer_secret=', credentials.consumer_secret,
+            ].join('')));
+        }
     }
 
     return credentials;
@@ -80,6 +89,9 @@ var server = repl.start({
 // Save REPL history
 replHistory(server, path.join(osHomedir(), '.tumblrjs_repl_history'));
 
+// Save the last response
+var _resp;
+
 // Create the Tumblr API Client
 var client = (function createTumblrClient() {
     var client = new tumblr.Client(credentials);
@@ -95,6 +107,7 @@ var client = (function createTumblrClient() {
         var requestMessage = 'GET ' + apiPath + (queryString ? '?' + queryString : '');
 
         getRequest.call(this, apiPath, params, function(err, resp) {
+            _resp = err || resp;
             if (err) {
                 console.error('\n', chalk.red(requestMessage));
                 console.error(chalk.red(err));
@@ -115,6 +128,7 @@ var client = (function createTumblrClient() {
         var requestMessage = 'POST ' + apiPath;
 
         postRequest.call(this, apiPath, params, function(err, resp) {
+            _resp = err || resp;
             if (err) {
                 console.error('\n', chalk.red(requestMessage));
                 console.error(chalk.red(err));
@@ -146,6 +160,12 @@ var client = (function createTumblrClient() {
         console.log('Stored in variable: \'result\'');
     };
 
+    Object.defineProperty(context, '_response', {
+        get: function() {
+            return _resp;
+        },
+    });
+
     Object.defineProperty(context, 'help', {
         get: function() {
             console.log('\n%s has the following methods:\n', chalk.blue('tumblr'));
@@ -170,6 +190,8 @@ var client = (function createTumblrClient() {
                     console.log('  %s(%s)', methodName, methodArgs);
                 }
             });
+            console.log('');
+            console.log('%s stores the response from the last API request response.', chalk.magenta('_response'));
             console.log('');
         },
     });
