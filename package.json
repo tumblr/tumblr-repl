@@ -1,6 +1,6 @@
 {
   "name": "tumblr-repl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "REPL for the Tumblr API, built on tumblr.js",
   "main": "index.js",
   "bin": {
