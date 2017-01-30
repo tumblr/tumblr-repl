@@ -100,7 +100,7 @@ var client = (function createTumblrClient() {
     var getRequest = client.getRequest;
     client.getRequest = function(apiPath, params, callback) {
         if (callback) {
-            return getRequest(apiPath, params, callback);
+            return getRequest.call(this, apiPath, params, callback);
         }
 
         var queryString = qs.stringify(params);
@@ -122,7 +122,7 @@ var client = (function createTumblrClient() {
     var postRequest = client.postRequest;
     client.postRequest = function(apiPath, params, callback) {
         if (callback) {
-            return getRequest(apiPath, params, callback);
+            return postRequest.call(this, apiPathß, params, callback);
         }
 
         var requestMessage = 'POST ' + apiPath;
