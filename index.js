@@ -122,7 +122,7 @@ var client = (function createTumblrClient() {
     var postRequest = client.postRequest;
     client.postRequest = function(apiPath, params, callback) {
         if (callback) {
-            return postRequest.call(this, apiPathß, params, callback);
+            return postRequest.call(this, apiPath, params, callback);
         }
 
         var requestMessage = 'POST ' + apiPath;
